@@ -1,0 +1,325 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Madara-Child\n"
+"POT-Creation-Date: 2025-01-20 11:59+0700\n"
+"PO-Revision-Date: 2018-06-28 21:50+0700\n"
+"Last-Translator: \n"
+"Language-Team: wpstylish <wpstylish@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;esc_html__;esc_html_e;__;esc_attr__;esc_attr_e;_x;_n:1,2;_n\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/settings-page.php:21
+msgid "Madara-Child-NovelHub Activation"
+msgstr ""
+
+#: admin/settings-page.php:22 admin/settings-page.php:31
+msgid "Madara-Child-NovelHub License"
+msgstr ""
+
+#: admin/settings-page.php:144
+msgid "Re-activate successfully. However, please deactivate & activate again to get correct license info"
+msgstr ""
+
+#: admin/settings-page.php:170
+msgid "License Key Activated"
+msgstr ""
+
+#: admin/settings-page.php:171
+msgid "Premium support until: "
+msgstr ""
+
+#: admin/settings-page.php:171
+msgid "[Please re-activate to update this value]"
+msgstr ""
+
+#: admin/settings-page.php:174
+msgid "Please enter the license key for this product to activate it. You were given a license key when you purchased this item."
+msgstr ""
+
+#: admin/settings-page.php:179
+msgid "License Key"
+msgstr ""
+
+#: admin/settings-page.php:201
+#, php-format
+msgid "Child theme is not activated, you should activate this plugin to use it,  %1$sactivate.%2$s "
+msgstr ""
+
+#: footer.php:70
+#, php-format
+msgid "&copy; %s Madara Inc. All rights reserved"
+msgstr ""
+
+#: footer.php:78
+msgid "Language:"
+msgstr ""
+
+#: functions.php:16
+msgid "You have reached the last chapter"
+msgstr ""
+
+#: functions.php:38
+msgid "This square thumb is used for NovelHub child theme"
+msgstr ""
+
+#: functions.php:168
+msgid "Child Theme Settings"
+msgstr ""
+
+#: functions.php:199
+msgid "Reading Page - Scroll Up To Load Previous Chapter"
+msgstr ""
+
+#: functions.php:204 functions.php:221
+msgid "On"
+msgstr ""
+
+#: functions.php:205 functions.php:222
+msgid "Off"
+msgstr ""
+
+#: functions.php:216
+msgid "Reading Page - Sticky Reading Menu"
+msgstr ""
+
+#: functions.php:233
+msgid "Header Button - Label"
+msgstr ""
+
+#: functions.php:237
+msgid "Label of the Header Button"
+msgstr ""
+
+#: functions.php:247
+msgid "Header Button - URL"
+msgstr ""
+
+#: functions.php:251
+msgid "URL of the Header Button"
+msgstr ""
+
+#: functions.php:261
+msgid "Manga Detail - Header Background Type"
+msgstr ""
+
+#: functions.php:266
+msgid "Manga Single - Background Image"
+msgstr ""
+
+#: functions.php:267
+msgid "Color"
+msgstr ""
+
+#: functions.php:269
+msgid "Type of background in the Manga Detail page"
+msgstr ""
+
+#: functions.php:276
+msgid "Manga Detail - Header Background"
+msgstr ""
+
+#: functions.php:277
+msgid "Main Color for Manga Detail - Header Background. Used when \"Manga Detail - Header Background Type\" is \"color\""
+msgstr ""
+
+#: functions.php:294
+msgid "Chapter Reader - Header Background"
+msgstr ""
+
+#: header.php:95
+msgid "Search..."
+msgstr ""
+
+#: header.php:112
+msgid "Sign in"
+msgstr ""
+
+#: header.php:113
+msgid "Sign up"
+msgstr ""
+
+#: madara-core/content/content-archive.php:159
+#, php-format
+msgid "Chapter %s"
+msgstr ""
+
+#: madara-core/content/content-search.php:68
+msgid "Alternative"
+msgstr ""
+
+#: madara-core/content/content-search.php:86
+msgid "Authors"
+msgstr ""
+
+#: madara-core/content/content-search.php:111
+msgid "Artists"
+msgstr ""
+
+#: madara-core/content/content-search.php:135
+msgid "Genres"
+msgstr ""
+
+#: madara-core/content/content-search.php:161
+msgid "Status"
+msgstr ""
+
+#: madara-core/content/content-search.php:179 shortcodes.php:307
+msgid "Release"
+msgstr ""
+
+#: madara-core/content/content-search.php:218
+msgid "Latest chapter"
+msgstr ""
+
+#: madara-core/manga-archive.php:26 madara-core/manga-breadcrumb.php:88
+msgid "All Mangas"
+msgstr ""
+
+#: madara-core/manga-archive.php:120
+#, php-format
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: madara-core/manga-breadcrumb.php:82
+msgid "Home"
+msgstr ""
+
+#: madara-core/manga-related.php:133
+msgid "You may also like"
+msgstr ""
+
+#: madara-core/manga-single-reading.php:127
+#: madara-core/single/info-summary.php:87
+msgid "Author: "
+msgstr ""
+
+#: madara-core/manga-single-reading.php:193
+msgid "Chapters"
+msgstr ""
+
+#: madara-core/manga-single-reading.php:194
+msgid "Comments"
+msgstr ""
+
+#: madara-core/manga-single-reading.php:256
+msgid "Fonts"
+msgstr ""
+
+#: madara-core/manga-single-reading.php:270
+msgid "Text size"
+msgstr ""
+
+#: madara-core/manga-single-reading.php:277
+msgid "Background"
+msgstr ""
+
+#: madara-core/manga-single.php:82
+msgid "About"
+msgstr ""
+
+#: madara-core/manga-single.php:87
+msgid "Table of Contents"
+msgstr ""
+
+#: madara-core/manga-single.php:97
+msgid "Synopsis"
+msgstr ""
+
+#: madara-core/manga-single.php:107
+msgid "Read more"
+msgstr ""
+
+#: madara-core/manga-single.php:121
+msgid "Tag"
+msgstr ""
+
+#: madara-core/single/info-chapters.php:49
+msgid "Latest Release : "
+msgstr ""
+
+#: madara-core/single/info-chapters.php:69
+msgid "Change Order"
+msgstr ""
+
+#: madara-core/single/info-chapters.php:188
+msgid "There is no chapters"
+msgstr ""
+
+#: madara-core/single/info-chapters.php:203
+msgid "Manga has no chapter yet."
+msgstr ""
+
+#: madara-core/single/info-chapters.php:210
+msgid "Show more "
+msgstr ""
+
+#: madara-core/single/info-summary.php:56
+#, php-format
+msgid "%s Chapters"
+msgstr ""
+
+#: madara-core/single/info-summary.php:76
+#, php-format
+msgid "%s Views"
+msgstr ""
+
+#: sample-data/sampledata.php:6
+msgid "Novelhub"
+msgstr ""
+
+#: sample-data/sampledata.php:9
+msgid "Mangabooth"
+msgstr ""
+
+#: sample-data/sampledata.php:22
+msgid "Widget Logic"
+msgstr ""
+
+#: shortcodes.php:305
+msgid "Genre"
+msgstr ""
+
+#: shortcodes.php:306 widgets/trending-manga-widget.php:96
+msgid "Title"
+msgstr ""
+
+#: shortcodes.php:308
+msgid "Author"
+msgstr ""
+
+#: shortcodes.php:309
+msgid "Time"
+msgstr ""
+
+#: widgets/trending-manga-widget.php:10
+msgid "Display Trending Manga"
+msgstr ""
+
+#: widgets/trending-manga-widget.php:12
+msgid "WP Manga: Trending Manga"
+msgstr ""
+
+#: widgets/trending-manga-widget.php:55
+msgid "Today"
+msgstr ""
+
+#: widgets/trending-manga-widget.php:56
+msgid "This Month"
+msgstr ""
+
+#: widgets/trending-manga-widget.php:57
+msgid "All Time"
+msgstr ""
+
+#: widgets/trending-manga-widget.php:102
+msgid "Number of posts"
+msgstr ""

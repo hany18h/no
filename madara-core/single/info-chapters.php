@@ -1,0 +1,216 @@
+<?php
+
+	/**
+	 * The Template for printing out list of chapters in Manga Detail page
+	 *
+	 * This template can be overridden by copying it to your-child-theme/madara-core/single/info-chapters.php
+	 *
+	 * HOWEVER, on occasion Madara will need to update template files and you
+	 * (the theme developer) will need to copy the new files to your theme to
+	 * maintain compatibility. We try to do this as little as possible, but it does
+	 * happen. When this occurs the version of the template file will be bumped and
+	 * we will list any important changes on our theme release logs.
+	 * @package Madara
+	 * @version 1.7.2.2
+	 */
+	 
+	 
+use App\Madara;
+$manga_single_chapters_list = Madara::getOption( 'manga_single_chapters_list', 'on' );
+$chapters_list_cols = Madara::getOption( 'manga_single_chapters_list_cols', 1 );
+$chapters_order             = Madara::getOption( 'manga_chapters_order', '*_desc' );
+$user_id = get_current_user_id();
+$manga_id = get_query_var('manga_id');
+
+global $wp_manga_storage, $wp_manga_user_actions, $wp_manga_functions;
+global $__CURRENT_CHAPTER;
+
+?>
+<div class="latest-release">
+	<?php
+		//Get latest chapter
+		global $wp_manga_database;
+		global $sort_setting;
+		
+		if(!isset($sort_setting)){
+			$sort_setting = $wp_manga_database->get_sort_setting();
+		}
+
+		$sort_by    = $sort_setting['sortBy'];
+		$sort_order = $sort_setting['sort'];
+		
+		$chapter = $wp_manga_functions->get_latest_chapters( get_the_ID(), null, 2, 0, $sort_by, $sort_order );
+		if ( ! empty( $chapter ) ) {
+			$latest_chapter     = $chapter[0];
+			$latest_chapter_url = $wp_manga_functions->build_chapter_url( get_the_ID(), $latest_chapter['chapter_slug'] );
+			?>
+			<div class="meta-item latest-chap">
+				<?php if ( isset( $latest_chapter['chapter_name'] ) ) { ?>
+					<span class="font-meta"><?php echo esc_html__( 'Latest Release : ', 'madara-child' ); ?> </span>
+					<span class="font-meta chapter"><a href="<?php echo esc_url( $latest_chapter_url ); ?>"><?php echo wp_kses_post( $latest_chapter['chapter_name'] ); ?></a></span>
+				<?php } ?>
+			</div>
+			<?php
+			$update_time = ! empty( $latest_chapter['date'] ) ? $latest_chapter['date'] : '';
+
+			$update_time = apply_filters( 'madara_archive_chapter_date', $update_time, $latest_chapter['chapter_id'], $latest_chapter['date'], $latest_chapter_url );
+
+			if ( ! empty( $update_time ) ) {
+				?>
+				<div class="meta-item post-on">
+					<span class="font-meta"><?php echo wp_kses_post( $update_time ); ?></span>
+				</div>
+				<?php
+			}
+			?>
+			<?php
+		}
+	?>
+	<a href="#" title="<?php echo esc_attr__('Change Order', 'madara-child');?>" class="btn-reverse-order"><i class="icon ion-md-swap"></i></a>
+</div>
+<div class="page-content-listing single-page <?php echo strpos($chapters_order, '_desc') !== false ? 'order-desc' : 'order-asc';?>" data-manga-id="<?php echo esc_attr(get_the_ID());?>">
+	<div class="listing-chapters_wrap cols-<?php echo esc_attr($chapters_list_cols);?>  <?php echo( esc_attr($manga_single_chapters_list == 'on' ? 'show-more' : '' )); ?>">
+
+		<?php if ( $manga ) : ?>
+
+			<?php do_action( 'madara_before_chapter_listing' );
+
+            $single = isset( $manga['0']['chapters'] ) ? $manga['0']['chapters'] : null;
+					
+            ?>
+
+			<ul class="main version-chap <?php echo esc_html($single ? 'no-volumn': 'volumns');?>">
+				<?php					
+					// ONE VOLUMN/NO VOLUMN
+
+					if ( $single ) { ?>
+
+						<?php 
+						$style     = $wp_manga_functions->get_reading_style();
+                        $unread_chapters = $wp_manga_user_actions->get_unread_chapters($user_id, $manga_id);
+                                                                    
+						foreach ( $single as $chapter ) {
+							$link      = $wp_manga_functions->build_chapter_url( $manga_id, $chapter, $style );
+							$time_diff = $wp_manga_functions->get_time_diff( $chapter['date'] );
+							$time_diff = apply_filters( 'madara_archive_chapter_date', '<i>' . $time_diff . '</i>', $chapter['chapter_id'], $chapter['date'], $link );
+							?>
+							
+							<li data-chapter-id="<?php echo esc_attr($chapter['chapter_id']);?>" class="wp-manga-chapter <?php echo esc_attr($__CURRENT_CHAPTER && $__CURRENT_CHAPTER['chapter_id'] == $chapter['chapter_id'] ? 'reading':'');?> <?php echo apply_filters('wp_manga_chapter_item_class','', $chapter, $manga_id);?>  <?php if(in_array($chapter['chapter_id'], $unread_chapters)) echo 'unread';?>">
+								<?php do_action('wp_manga_before_chapter_name',$chapter, $manga_id);?>
+								
+								<a href="<?php echo esc_url( $link ); ?>">
+									<?php echo isset( $chapter['chapter_name'] ) ? wp_kses_post( $chapter['chapter_name'] . $wp_manga_functions->filter_extend_name( $chapter['chapter_name_extend'] ) ) : ''; ?>
+								</a>
+
+								<?php if ( $time_diff ) { ?>
+									<span class="chapter-release-date">
+										<?php echo wp_kses_post( $time_diff ); ?>
+									</span>
+								<?php } ?>
+								
+								<?php do_action('wp_manga_after_chapter_name',$chapter, $manga_id);?>
+
+							</li>
+							
+
+						<?php } //endforeach ?>
+
+						<?php unset( $manga['0'] );
+					}//endif;
+				?>
+
+				<?php
+				
+					// with VOLUMNS
+
+					if ( ! empty( $manga ) ) {
+
+						if ( strpos($chapters_order, '_desc') !== false ) {
+							$manga = array_reverse( $manga );
+						}
+						
+						$style = $wp_manga_functions->get_reading_style();
+
+						foreach ( $manga as $vol_id => $vol ) {
+
+							$chapters = isset( $vol['chapters'] ) ? $vol['chapters'] : null;
+
+							$chapters_parent_class = $chapters ? 'parent has-child' : 'parent no-child';
+							$chapters_child_class  = $chapters ? 'has-child' : 'no-child';
+							$first_volume_class    = isset( $first_volume ) ? '' : ' active';
+							?>
+
+							<ul class="<?php echo esc_attr( $chapters_parent_class . ' ' . $first_volume_class ); ?>">
+
+								<?php echo isset( $vol['volume_name'] ) ? '<a href="javascript:void(0)" class="' . $chapters_child_class . '">' . $vol['volume_name'] . '</a>' : ''; ?>
+								<?php
+
+									if ( $chapters ) { ?>
+										<ul class="sub-chap list-chap" <?php echo isset( $first_volume ) ? '' : ' style="display: block;"'; ?> >
+                                            <li>
+                                                <ul class="sub-chap-list">
+											<?php 
+                                            
+                                            // check if there are "unread chapters"
+                                            $unread_chapters = $wp_manga_user_actions->get_unread_chapters($user_id, $manga_id);
+                                            
+											foreach ( $chapters as $chapter ) {
+												
+												$chapter['volume_slug'] = $wp_manga_storage->slugify( $vol['volume_name'] );
+												$link          = $wp_manga_functions->build_chapter_url( $manga_id, $chapter, $style );
+												$c_extend_name = madara_get_global_wp_manga_functions()->filter_extend_name( $chapter['chapter_name_extend'] );
+												$time_diff     = $wp_manga_functions->get_time_diff( $chapter['date'] );
+												$time_diff     = apply_filters( 'madara_archive_chapter_date', '<i>' . $time_diff . '</i>', $chapter['chapter_id'], $chapter['date'], $link );
+												?>
+
+												<li data-chapter-id=<?php echo esc_attr($chapter['chapter_id']);?> class="wp-manga-chapter <?php echo apply_filters('wp_manga_chapter_item_class','', $chapter, $manga_id); echo esc_attr($__CURRENT_CHAPTER && $__CURRENT_CHAPTER['chapter_id'] == $chapter['chapter_id'] ? 'reading':'');?> <?php if(in_array($chapter['chapter_id'], $unread_chapters)) echo 'unread';?>">
+													<?php do_action('wp_manga_before_chapter_name',$chapter, $manga_id);?>
+													<a href="<?php echo esc_url( $link ); ?>">
+														<?php echo wp_kses_post( $chapter['chapter_name'] . $c_extend_name ) ?>
+													</a>
+
+													<?php if ( $time_diff ) { ?>
+														<span class="chapter-release-date">
+															<?php echo wp_kses_post( $time_diff ); ?>
+														</span>
+													<?php } ?>
+													
+													<?php do_action('wp_manga_after_chapter_name',$chapter, $manga_id);?>
+
+												</li>
+
+											<?php } ?>
+                                                </ul>
+                                            </li>
+										</ul>
+									<?php } else { ?>
+
+										<span class="no-chapter"><?php echo esc_html__( 'There is no chapters', 'madara-child' ); ?></span>
+									<?php } ?>
+							</ul>
+							<?php $first_volume = false; ?>
+
+						<?php } //endforeach; ?>
+
+					<?php } //endif-empty( $volume);
+				?>
+			</ul>
+
+			<?php do_action( 'madara_after_chapter_listing' ) ?>
+
+		<?php else : ?>
+
+			<?php echo esc_html__( 'Manga has no chapter yet.', 'madara-child' ); ?>
+
+		<?php endif; ?>
+
+		<?php if ( $manga_single_chapters_list == 'on' ) { ?>
+			<div class="c-chapter-readmore">
+				<span class="btn btn-link chapter-readmore">
+					<?php echo esc_html__( 'Show more ', 'madara-child' ); ?>
+				</span>
+			</div>
+		<?php } ?>
+
+	</div>
+</div>
