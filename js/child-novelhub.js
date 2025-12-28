@@ -181,4 +181,35 @@ jQuery(document).ready(function($){
         }
     });
 
+    // Smooth scroll for next chapter button
+    $('.next-chapter-btn').on('click', function(e) {
+        if (!$(this).hasClass('disabled')) {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 400);
+        }
+    });
+
+    // Improve hover effects on manga items
+    $('.page-item-detail').hover(
+        function() {
+            $(this).addClass('hovered');
+        },
+        function() {
+            $(this).removeClass('hovered');
+        }
+    );
+
+    // Keyboard navigation for next chapter
+    if ($('body').hasClass('reading-manga')) {
+        $(document).on('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'n' || e.key === 'N') {
+                const nextBtn = $('.next-chapter-btn:not(.disabled)');
+                if (nextBtn.length > 0) {
+                    window.location.href = nextBtn.attr('href');
+                }
+            }
+        });
+    }
+
 });

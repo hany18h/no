@@ -177,8 +177,49 @@
 												?>
 
                                             </div>
-										
+
 											<?php echo apply_filters( 'madara_ads_after_content', madara_ads_position( 'ads_after_content', 'body-bottom-ads' ) ); ?>
+
+											<?php
+											// Get next chapter
+											global $wp_manga_database;
+											$sort_setting = $wp_manga_database->get_sort_setting();
+											$sort_order = $sort_setting['sort'];
+
+											$all_chapters = $wp_manga_functions->get_all_chapters($manga_id, $sort_order);
+											$current_chapter_id = $reading_chapter['chapter_id'];
+											$next_chapter = null;
+
+											// Find next chapter
+											if (!empty($all_chapters)) {
+												$found_current = false;
+												foreach ($all_chapters as $vol) {
+													if (isset($vol['chapters'])) {
+														foreach ($vol['chapters'] as $chap) {
+															if ($found_current) {
+																$next_chapter = $chap;
+																break 2;
+															}
+															if ($chap['chapter_id'] == $current_chapter_id) {
+																$found_current = true;
+															}
+														}
+													}
+												}
+											}
+
+											if ($next_chapter) {
+												$next_chapter_url = $wp_manga_functions->build_chapter_url($manga_id, $next_chapter, $style);
+												?>
+												<a href="<?php echo esc_url($next_chapter_url); ?>" class="next-chapter-btn">
+													<span><?php echo esc_html__('Next Chapter', 'madara-child'); ?></span>
+													<i class="icon ion-ios-arrow-forward"></i>
+												</a>
+											<?php } else { ?>
+												<div class="next-chapter-btn disabled">
+													<span><?php echo esc_html__('No More Chapters', 'madara-child'); ?></span>
+												</div>
+											<?php } ?>
 
                                         </div>
 
